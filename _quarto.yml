@@ -1,5 +1,15 @@
 project:
   type: website
   title: "Penguins 2"
+  
+website:
+  navbar:
+    background: '#cad4eb'
+    search: true
+    left:
+      - text: "Menu"
+        menu:
+          - model.qmd
+          - eda.qmd 
 
 editor: visual
