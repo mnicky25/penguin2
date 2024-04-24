@@ -1,0 +1,65 @@
+---
+title: "Penguins Model"
+format:
+  html:
+    code-fold: true
+---
+
+```{r}
+library(palmerpenguins)
+library(dplyr)
+library(ggplot2)
+library(dbplyr)
+library(tidymodels)
+library(parsnip)
+```
+
+## Get Data
+
+```{r}
+df <- palmerpenguins::penguins
+head(df)
+```
+
+## Define Model and Fit
+
+```{r}
+knn_spec <- nearest_neighbor(neighbors = 3) %>%
+  set_mode("classification") %>%
+  set_engine("kknn")
+```
+
+## Get some information
+
+```{r}
+knn_fit <- knn_spec %>%
+  fit(species ~ bill_depth_mm + flipper_length_mm + body_mass_g, data = df)
+```
+
+Convert to vetiver model
+
+```{python}
+#import vetiver
+#import pins
+
+# Assuming 'model' is your trained ML model and 'X' is your prototype data
+#v = VetiverModel(model, model_name='penguin_model', prototype_data=X)
+
+# Create an API for the model with prototype data checking enabled
+#app = VetiverAPI(v, check_prototype=True)
+
+# Create or specify a board to pin your model
+#b = pins.board_folder('board', allow_pickle_read=True)
+
+# Assuming you want to write the model to a pin
+#vetiver_pin_write(b, v, 'penguin_model')
+
+# Load the model from a pin, if needed
+#v_loaded = VetiverModel.from_pin(b, 'penguin_model')
+
+#vetiver.prepare_docker(b, 'penguin_model')
+```
+
+\`\`\`{#{DO NOT NEED TO RUN AGAIN} #import duckdb #from palmerpenguins import penguins
+
+#con = duckdb.connect('my-db.duckdb') #df = penguins.load_penguins() #con.execute('CREATE TABLE penguins AS SELECT \* FROM df') #con.close() \`\`\`
