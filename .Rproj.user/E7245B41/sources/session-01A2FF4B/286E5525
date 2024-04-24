@@ -3,7 +3,7 @@
     "path": "~/Schoolwork/Spring 2024/Stats/Final Project/Final Final Project/_quarto.yml",
     "project_path": "_quarto.yml",
     "type": "yaml",
-    "hash": "3261315880",
+    "hash": "1532944279",
     "contents": "",
     "dirty": false,
     "created": 1713935426639.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "12,20",
+        "cursorPosition": "13,15",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1713973462,
+    "lastKnownWriteTime": 1713975630,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1713973462660,
+    "last_content_update": 1713975630722,
     "read_only": false,
     "read_only_alternatives": []
 }

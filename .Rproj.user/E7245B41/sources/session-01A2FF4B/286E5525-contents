@@ -4,12 +4,13 @@ project:
   
 website:
   navbar:
-    background: '#cad4eb'
+    background: "#cad4eb"
     search: true
     left:
-      - text: "Menu"
-        menu:
-          - model.qmd
-          - eda.qmd 
+      - text: "Home"
+        file: Home.qmd
+      - penguins.qmd
+      - model.qmd
+      - eda.qmd
 
 editor: visual
