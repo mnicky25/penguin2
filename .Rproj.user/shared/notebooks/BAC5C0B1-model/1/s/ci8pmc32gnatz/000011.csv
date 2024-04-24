@@ -1,0 +1,2 @@
+"0","lda_fit <- lda_spec %>%"
+"0","  fit(species ~ bill_depth_mm + flipper_length_mm + body_mass_g, data = df)"

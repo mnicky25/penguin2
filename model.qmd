@@ -12,6 +12,7 @@ library(ggplot2)
 library(dbplyr)
 library(tidymodels)
 library(parsnip)
+library(discrim)
 ```
 
 ## Get Data
@@ -24,14 +25,12 @@ head(df)
 ## Define Model and Fit
 
 ```{r}
-knn_spec <- nearest_neighbor(neighbors = 3) %>%
-  set_mode("classification") %>%
-  set_engine("kknn")
+lda_spec <- discrim_linear(mode = "classification", engine = "MASS")
 ```
 
 ## Get some information
 
 ```{r}
-knn_fit <- knn_spec %>%
+lda_fit <- lda_spec %>%
   fit(species ~ bill_depth_mm + flipper_length_mm + body_mass_g, data = df)
 ```
