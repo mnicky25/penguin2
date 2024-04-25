@@ -122,10 +122,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./Home.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="./penguins.html"> 
 <span class="menu-text">Penguin Facts</span></a>
   </li>  
@@ -231,8 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Linear Discriminant Analysis (LDA) is a classification technique used in machine learning and statistics to find a linear combination of features that characterizes or separates two or more classes of objects or events. It reduces dimensions while preserving as much of the class discriminatory information as possible, and is commonly used for pattern recognition, dimensionality reduction, and informative feature extraction. LDA works by maximizing the ratio of between-class variance to within-class variance, ensuring that the classes are as distinct as possible in the resulting projection.</p>
 <p>In this case, LDA is probably overkill, since we are trying to predict a penguin’s species using just a few parameters. Let’s see how it did!</p>
 </section>
-<section id="model-evaluation" class="level3">
-<h3 class="anchored" data-anchor-id="model-evaluation">Model Evaluation</h3>
+<section id="model-evaluation-and-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="model-evaluation-and-comparison">Model Evaluation and Comparison</h3>
 <p>Finally, we can test how well the model does with new/unseen data. This allows us to evaluate the model’s effectiveness.</p>
 <div class="cell">
 <details class="code-fold">
@@ -247,7 +243,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1 accuracy multiclass       0.7</code></pre>
 </div>
 </div>
-<p>Our LDA model predicts a penguin’s species with 77% accuracy. To get an idea of how “good” this accuracy is, we could compare it to the accuracy of other models trained on this data set.</p>
+<p>Our LDA model predicts a penguin’s species with 77% accuracy. To get an idea of how “good” this accuracy is, we can compare it to the accuracy of other possible models.</p>
+<p>The following code fits and finds the accuracy of a logistic classification model.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">"classification"</span>, <span class="at">engine =</span> <span class="st">"glm"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> <span class="fu">fit</span>(species <span class="sc">~</span> bill_depth_mm <span class="sc">+</span> flipper_length_mm <span class="sc">+</span> body_mass_g, <span class="at">data =</span> penguins_train)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(lm_fit, <span class="at">new_data =</span> penguins_test) <span class="sc">%&gt;%</span> <span class="fu">accuracy</span>(<span class="at">truth =</span> species, <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy multiclass     0.386</code></pre>
+</div>
+</div>
+<p>The accuracy for a simple logistic regression is around 38%, which is significantly worse than the accuracy for our LDA model. Seems like the LDA model is doing a pretty good job! in the future, it might be worth experimenting with other types of classification models like KNN or QDA to see if we can get better results. For now, though, we can stick with the LDA model’s 77% accuracy.</p>
 
 
 </section>
