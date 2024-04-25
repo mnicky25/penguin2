@@ -48,7 +48,7 @@ Linear Discriminant Analysis (LDA) is a classification technique used in machine
 
 In this case, LDA is probably overkill, since we are trying to predict a penguin's species using just a few parameters. Let's see how it did!
 
-### Model Evaluation
+### Model Evaluation and Comparison
 
 Finally, we can test how well the model does with new/unseen data. This allows us to evaluate the model's effectiveness.
 
@@ -57,4 +57,16 @@ augment(lda_fit, new_data = penguins_test) %>%
   accuracy(truth = species, estimate = .pred_class)
 ```
 
-Our LDA model predicts a penguin's species with 77% accuracy. To get an idea of how "good" this accuracy is, we could compare it to the accuracy of other models trained on this data set.
+Our LDA model predicts a penguin's species with 77% accuracy. To get an idea of how "good" this accuracy is, we can compare it to the accuracy of other possible models.
+
+The following code fits and finds the accuracy of a logistic classification model.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
+lm_spec <- logistic_reg(mode = "classification", engine = "glm")
+
+lm_fit <- lm_spec %>% fit(species ~ bill_depth_mm + flipper_length_mm + body_mass_g, data = penguins_train)
+
+augment(lm_fit, new_data = penguins_test) %>% accuracy(truth = species, estimate = .pred_class)
+```
+
+The accuracy for a simple logistic regression is around 38%, which is significantly worse than the accuracy for our LDA model. Seems like the LDA model is doing a pretty good job! in the future, it might be worth experimenting with other types of classification models like KNN or QDA to see if we can get better results. For now, though, we can stick with the LDA model's 77% accuracy.

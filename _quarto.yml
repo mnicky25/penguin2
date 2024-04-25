@@ -7,7 +7,6 @@ website:
     background: "#cad4eb"
     search: true
     left:
-      - href: Home.qmd
       - penguins.qmd
       - model.qmd
       - eda.qmd
