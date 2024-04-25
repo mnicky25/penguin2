@@ -1,5 +1,5 @@
 ---
-title: "index"
+title: "Penguins 2"
 ---
 
 ## Penguins 2
