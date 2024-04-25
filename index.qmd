@@ -2,8 +2,6 @@
 title: "Penguins 2"
 ---
 
-## Penguins 2
-
 Hello and welcome to Penguins 2, a website for exploring and modeling data from the Palmer Penguins data set (available [here](https://cran.r-project.org/web/packages/palmerpenguins/readme/README.html)).
 
 ![](/images/penguin.gif)
