@@ -7,8 +7,7 @@ website:
     background: "#cad4eb"
     search: true
     left:
-      - text: "Home"
-        file: Home.qmd
+      - href: Home.qmd
       - penguins.qmd
       - model.qmd
       - eda.qmd

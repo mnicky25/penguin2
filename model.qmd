@@ -1,11 +1,13 @@
 ---
-title: "Penguins Model"
+title: "Penguin Model"
 format:
   html:
     code-fold: true
 ---
 
-```{r}
+Welcome to the penguin model! To get started, we will load in all of the R packages required to build our Linear Discriminant Analysis model.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
 library(palmerpenguins)
 library(dplyr)
 library(ggplot2)
@@ -15,22 +17,44 @@ library(parsnip)
 library(discrim)
 ```
 
-## Get Data
+### Get Data
 
-```{r}
+Next, we will load the data in from the palmer penguins data set. Then, we randomly split the data into test and training sets so that we can get a more accurate estimate of its performance on unseen data and avoid overfitting.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
 df <- palmerpenguins::penguins
 head(df)
+
+set.seed(65)
+penguins_split <- initial_split(df, prop = 0.80, strata = species)
+penguins_train <- training(penguins_split)
+penguins_test <- testing(penguins_split)
 ```
 
-## Define Model and Fit
+### Define and Fit Model
 
-```{r}
+Now that we have loaded in and divided the data, we can create and fit an LDA model.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
+# Create the specification
 lda_spec <- discrim_linear(mode = "classification", engine = "MASS")
-```
 
-## Get some information
-
-```{r}
+# Fit the model on the training data
 lda_fit <- lda_spec %>%
-  fit(species ~ bill_depth_mm + flipper_length_mm + body_mass_g, data = df)
+  fit(species ~ bill_depth_mm + flipper_length_mm + body_mass_g, data = penguins_train)
 ```
+
+Linear Discriminant Analysis (LDA) is a classification technique used in machine learning and statistics to find a linear combination of features that characterizes or separates two or more classes of objects or events. It reduces dimensions while preserving as much of the class discriminatory information as possible, and is commonly used for pattern recognition, dimensionality reduction, and informative feature extraction. LDA works by maximizing the ratio of between-class variance to within-class variance, ensuring that the classes are as distinct as possible in the resulting projection.
+
+In this case, LDA is probably overkill, since we are trying to predict a penguin's species using just a few parameters. Let's see how it did!
+
+### Model Evaluation
+
+Finally, we can test how well the model does with new/unseen data. This allows us to evaluate the model's effectiveness.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
+augment(lda_fit, new_data = penguins_test) %>%
+  accuracy(truth = species, estimate = .pred_class)
+```
+
+Our LDA model predicts a penguin's species with 77% accuracy. To get an idea of how "good" this accuracy is, we could compare it to the accuracy of other models trained on this data set.

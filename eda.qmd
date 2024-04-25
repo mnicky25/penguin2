@@ -1,24 +1,34 @@
 ---
-title: "Penguins EDA"
+title: "Penguin EDA"
 format:
   html:
     code-fold: true
 ---
 
-## Penguin Size and Mass by Sex and Species
+Welcome to exploratory data analysis for palmer penguins data set!
 
-```{r}
+### Get Data
+
+First, we load in all of the necessary libraries.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
 library(palmerpenguins)
 library(dplyr)
 library(ggplot2)
 library(dbplyr)
 ```
 
-```{r}
+Then, we load the palmer penguins data into a dataframe.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
 df <- palmerpenguins::penguins
 ```
 
-```{r}
+### Find Means of Numeric Variables
+
+This code finds the mean value for every numeric parameter in the data set, forms groups by species and sex, and calculates the average parameter value for each group. It then outputs the results into a markdown table.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
 df %>%
   group_by(species, sex) %>%
   summarise(
@@ -30,11 +40,47 @@ df %>%
   knitr::kable()
 ```
 
-## Penguin Size vs Mass by Species
+There's a lot of good information here, but it's a bit difficult to interpret all at once. One notable piece of information we get from this table is that bill length, flipper length, and body mass tend to be higher for males compared to females of the same species. Additionally, Gentoo penguins have a much higher average flipper length and body mass than the other two species.
 
-```{r}
+### Visualize the Data
+
+To get a better sense of the overlap between flipper lengths between the three species (as opposed to just comparing mean values), we can use side-by-side box plots.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
+ggplot(df, aes(x = species, y = flipper_length_mm)) +
+  geom_boxplot() +
+  labs(title = "Comparison of Flipper Lengths",
+       subtitle = "By Species",
+       x = "Species",
+       y = "Flipper Length (mm)")
+```
+
+This visualization gives us information about the variance of each penguin species' flipper length distribution, as well as the overlap in flipper lengths between species. While all three species have clearly different median flipper lengths, there is still a lot of overlap in penguins between the species, especially between Adelie and Chinstrap penguins.
+
+The next chunk of code creates another side-by-side box plot, this time comparing body mass distributions across species.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
+ggplot(df, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(title = "Comparison of Body Mass",
+       subtitle = "By Species",
+       x = "Species",
+       y = "Body Mass (g)")
+```
+
+Gentoo penguins have a significantly higher body mass than the other two species, which are very close to each other both in median value and interquartile range. This might make it more difficult for our classification model to distinguish between Adelie and Gentoo penguins.
+
+Finally, to get an idea of how both flipper length and body mass are related across species, we can plot the relationship between these two measures on a scatter plot.
+
+```{r error=TRUE, warning=FALSE, message=FALSE}
 df %>%
   ggplot(aes(x = bill_length_mm, y = body_mass_g, color = species)) +
   geom_point() + 
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  labs(title = "Body Mass vs. Bill Length",
+     subtitle = "By Species",
+     x = "Bill Length (mm)",
+     y = "Body Mass (g)")
 ```
+
+This scatterplot shows that penguins are roughly clustered by species when comparing their body mass and bill length. The added regression lines show that within each species, the relationship between bill length and body mass is pretty similar; penguins with longer bills tend to have a higher body mass regardless of the species.
