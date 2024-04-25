@@ -7,6 +7,7 @@ website:
     background: "#cad4eb"
     search: true
     left:
+      - index.qmd
       - penguins.qmd
       - model.qmd
       - eda.qmd
