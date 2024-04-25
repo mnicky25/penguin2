@@ -69,4 +69,4 @@ lm_fit <- lm_spec %>% fit(species ~ bill_depth_mm + flipper_length_mm + body_mas
 augment(lm_fit, new_data = penguins_test) %>% accuracy(truth = species, estimate = .pred_class)
 ```
 
-The accuracy for a simple logistic regression is around 38%, which is significantly worse than the accuracy for our LDA model. Seems like the LDA model is doing a pretty good job! in the future, it might be worth experimenting with other types of classification models like KNN or QDA to see if we can get better results. For now, though, we can stick with the LDA model's 77% accuracy.
+The accuracy for a simple logistic regression is around 38%, which is significantly worse than the accuracy for our LDA model. Seems like the LDA model is doing a pretty good job! In the future, it might be worth experimenting with other types of classification models like KNN or QDA to see if we can get better results. For now, though, we can stick with the LDA model's 77% accuracy.

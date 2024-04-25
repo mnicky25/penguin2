@@ -8,8 +8,8 @@ website:
     search: true
     left:
       - index.qmd
-      - penguins.qmd
-      - model.qmd
       - eda.qmd
+      - model.qmd
+      - penguins.qmd
 
 editor: visual
